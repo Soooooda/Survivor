@@ -14,7 +14,7 @@ namespace Tool
 
         public delegate void OnGetReceive(string message);//接收到消息的委托
         public OnGetReceive onGetReceive;
-
+        public static string receive_data;
         byte[] m_result = new byte[1024];
         Socket m_clientSocket;
 
@@ -101,6 +101,7 @@ namespace Tool
                     int receiveLength = m_clientSocket.Receive(m_result);
                     NetBufferReader reader = new NetBufferReader(m_result);
                     string data = reader.ReadString();
+                    receive_data = data;
                     Debug.Log("服务器返回数据：" + data);
                     if (onGetReceive != null)
                     {

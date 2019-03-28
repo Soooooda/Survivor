@@ -33,12 +33,16 @@ public class SignInUp : MonoBehaviour {
     InputField m_Register_UserPassword;
     [SerializeField]
     InputField m_Register_UserName;
+    private bool logInFlag;
 
     string m_receiveMessage = "wait...";
 
+
     void Start()
     {
-        ClientSocket.instance.ConnectServer("188.131.178.149", 8078);
+        logInFlag = true;
+        if(!ClientSocket.instance.isConnected)
+            ClientSocket.instance.ConnectServer("10.136.2.134", 8078);// 10.136.2.134 188.131.178.149
         //m_connectBtn.onClick.AddListener(SocketConnect);
         //m_sendBtn.onClick.AddListener(SocketSendMessage);
         //m_disconnectBtn.onClick.AddListener(SocketDisconnect);
@@ -72,6 +76,8 @@ public class SignInUp : MonoBehaviour {
     }
     void UserLogin()
     {
+        //记得删掉
+        ClientSocket.instance.SendMessage("sign#out#123@qq.com");
         string username = m_UserName.text;
         string userpassword = m_UserPassword.text;
         string content = "sign#in#"+username+"#"+userpassword;
@@ -79,17 +85,8 @@ public class SignInUp : MonoBehaviour {
         if (!string.IsNullOrEmpty(content))
         {
             ClientSocket.instance.SendMessage(content);
-            ClientSocket.instance.onGetReceive = ShowReceiveMessage;
-            ClientSocket.instance.onGetReceive = ShowReceiveMessage;
 
-            Debug.Log("11111"+ m_receiveMessage);
-            Debug.Log(m_receiveMessage);
-            if (m_receiveMessage == "Message:user logged")
-            {
-                Debug.Log("进入下一个啦啊啦啦啦啦啦啦啦啦");
-                ConstantData.userID = username;
-                StartCoroutine(FadeScene());
-            }
+
         }
     }
 
@@ -109,11 +106,7 @@ public class SignInUp : MonoBehaviour {
     }
 
 
-    void SocketDisconnect()
-    {
-        ClientSocket.instance.Disconnect();
-        m_receiveMessage = "已断开连接";
-    }
+
 
     //展示有没有连上
     void ShowReceiveMessage(string message)
@@ -124,14 +117,19 @@ public class SignInUp : MonoBehaviour {
     //展示文字
     void Update()
     {
-        //m_receiveText.text = m_receiveMessage;
         
-        //Debug.Log("调用了！！想让物体变大");
-        //RectTransform trans = m_RegisterBtn.GetComponent<RectTransform>();
-        //float mX = 1f;
-        //float mY = 1f;
-        //trans.sizeDelta = new Vector2(trans.sizeDelta.x + mX, trans.sizeDelta.y + mY);
-
+        if (logInFlag==true&& m_receiveMessage.Contains("successfully"))
+        {
+            string username = m_UserName.text;
+            logInFlag = false;
+            Debug.Log(m_receiveMessage);
+            if (m_receiveMessage.Contains("successfully"))
+            {
+                Debug.Log("进入下一个啦啊啦啦啦啦啦啦啦啦");
+                ConstantData.userID = username;
+                StartCoroutine(FadeScene());
+            }
+        }
     }
 
 

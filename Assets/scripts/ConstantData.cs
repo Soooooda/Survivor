@@ -5,10 +5,23 @@ using UnityEngine;
 public class ConstantData : MonoBehaviour {
 
     public static string userID = "";
+    public static string roomID = "";
+    public static string roomOwner = "";
+    public static string roomName = "";
+    public static int role = -1;
+    public static bool hasRole = false;
 
-	// Use this for initialization
-	void Start () {
-        GameObject.DontDestroyOnLoad(gameObject);
+    public static void ResetAllData()
+    {
+        userID = "";
+        roomID = "";
+        roomOwner = "";
+        roomName = "";
+    }
+
+    void Start () {
+        DontDestroyOnLoad(gameObject);
+
     }
 	
 	// Update is called once per frame

@@ -13,8 +13,30 @@ public class ButtonManage : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		gameObject.SetActive(true);
+		//gameObject.SetActive(true);
     }
+
+    //点击进入后显示输入密码
+    //public void clicktoEnterPwd(GameObject go)
+    //{
+    //    go.SetActive(true);
+    //}
+
+
+    //点击tab后显示room
+    //public void OnClickTabShowRooms()
+    //{
+    //    changeMyRoomListFlag = true;
+    //    string roomnum = m_RoomNum.text;
+    //    string userid = ConstantData.userID;
+    //    string content = "room#list#" + userid;
+    //    Debug.Log(content);
+    //    if (!string.IsNullOrEmpty(content))
+    //    {
+    //        ClientSocket.instance.SendMessage(content);
+    //    }
+    //}
+
 
     public void OnHoverEvent(GameObject go)
     {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Random = UnityEngine.Random;
+using Tool;
 
 public class BoardManager : MonoBehaviour {
     [Serializable]
@@ -47,6 +48,10 @@ public class BoardManager : MonoBehaviour {
     //keep track of positions
     private List<Vector3> gridPositions = new List<Vector3>();
     private List<Vector3> itemPositions = new List<Vector3>();
+
+    //连接服务器用
+    string m_receiveMessage = "wait...";
+
 
     //把所有可以放物品的位置初始化
     void InitialiseList()
@@ -114,9 +119,17 @@ public class BoardManager : MonoBehaviour {
 
     public void SetupScene()
     {
+        ClientSocket.instance.onGetReceive = ShowReceiveMessage;
         BoardSetup();
         InitialiseList();
         LayoutObjectAtRandom(leaves, leafCount.minmum, leafCount.maximum);
         //int enemyCuunt = (int)
     }
+
+    //展示有没有连上
+    void ShowReceiveMessage(string message)
+    {
+        m_receiveMessage = message;
+    }
+
 }
