@@ -53,7 +53,7 @@ public class playerControll : MonoBehaviour {
         anim = PlayerAction.GetComponent<Animator>();
     }
 
-
+    int count = 0;
     //开始捡东西,并且存起来
     public void pickThings(Collider other)
     {
@@ -63,24 +63,27 @@ public class playerControll : MonoBehaviour {
         GameObject component = other.gameObject.transform.Find("PickableThing").gameObject;
         Sprite pickedSprite = component.GetComponent<SpriteRenderer>().sprite;
         //如果包里一开始有
-        Debug.Log(pickedSprite.name);
+        count++;
+        Debug.Log(count+": "+pickedSprite.name);
+
         for (int i = 0;i<10;i++)
         {
-            Debug.Log(Things[i]);
+            //Debug.Log(Things[i]);
             if(Things[i] != null &&pickedSprite==Things[i].GetComponent<Image>().sprite)
             {
                 string num = Things[i].transform.Find("num").gameObject.GetComponent<Text>().text;
-                //int n = int.Parse(num);
-                //n++;
                 ThingsNum[i]++;
                 Things[i].transform.Find("num").gameObject.GetComponent<Text>().text = ThingsNum[i].ToString();
                 pickedflag = true;
                 Destroy(component);
+                break;
             }
+            
         }
         //如果包里一开始没有东西,就装进去
         if(!pickedflag)
         {
+            Debug.Log("漏网之🐟");
             int index = -1;
             for(int i=0;i<10;i++)
             {
@@ -100,9 +103,6 @@ public class playerControll : MonoBehaviour {
             
         }
         
-        
-        //component.transform.parent = PlayerBag.transform;
-        //Destroy(component);
         if (magic < 100)
             magic++;
         if (blood < 100 )
