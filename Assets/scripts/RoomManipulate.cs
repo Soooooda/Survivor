@@ -100,7 +100,9 @@ public class RoomManipulate: MonoBehaviour {
         }
         //发送消息验证房间
     }
-    
+
+
+
     //取消输入房间密码
     void CancelPad()
     {
@@ -132,6 +134,7 @@ public class RoomManipulate: MonoBehaviour {
         Debug.Log(content);
         if (!string.IsNullOrEmpty(content))
         {
+            ClientSocket.instance.onGetReceive = ShowReceiveMessage;
             ClientSocket.instance.SendMessage(content);
         }
     }
@@ -160,7 +163,7 @@ public class RoomManipulate: MonoBehaviour {
     void Update()
     {
 
-
+        //ClientSocket.instance.onGetReceive = ShowReceiveMessage;
         if (myRoomsPanel.activeInHierarchy == true&& changetoRoomPanel == true)
         {
             changetoRoomPanel = false;
@@ -199,8 +202,8 @@ public class RoomManipulate: MonoBehaviour {
                     string roomid = sss[0];
                     string roomname = sss[1];
                     string roomOwner = sss[2];
-                    CreatedRoom.transform.Find("RoomName").GetComponent<UnityEngine.UI.Text>().text = roomid;
-                    CreatedRoom.transform.Find("RoomID").GetComponent<UnityEngine.UI.Text>().text = roomname;
+                    CreatedRoom.transform.Find("RoomName").GetComponent<UnityEngine.UI.Text>().text = roomname;
+                    CreatedRoom.transform.Find("RoomID").GetComponent<UnityEngine.UI.Text>().text = roomid;
                     Myrooms[i-1] = Instantiate(CreatedRoom, Rooms.transform) as GameObject;
                     //RoomControl roomAttribute = Myrooms[i-1].transform.GetComponent<RoomControl>();
                     //roomAttribute.RoomID = roomid;

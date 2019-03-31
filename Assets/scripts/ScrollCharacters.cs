@@ -20,7 +20,7 @@ public class ScrollCharacters : MonoBehaviour,IBeginDragHandler,IEndDragHandler 
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (ConstantData.role == -1)
+        if (ConstantData.hasRole == false)
         {
             float posX = scrollRect.horizontalNormalizedPosition;
             Debug.Log(posX);
@@ -52,7 +52,7 @@ public class ScrollCharacters : MonoBehaviour,IBeginDragHandler,IEndDragHandler 
     {
         string roomid = ConstantData.roomID;
         string userid = ConstantData.userID;
-        string content = "role#show#" + roomid + userid;
+        string content = "role#show#" + roomid +"#"+ userid+"#####";
         Debug.Log(content);
         if (!string.IsNullOrEmpty(content))
         {
@@ -63,7 +63,7 @@ public class ScrollCharacters : MonoBehaviour,IBeginDragHandler,IEndDragHandler 
 
     // Update is called once per frame
     void Update () {
-        Debug.Log(ConstantData.role);
+        //Debug.Log(ConstantData.role);
         if (m_receiveMessage.Contains("#320#"))
         {
             string[] temp = m_receiveMessage.Split('#');

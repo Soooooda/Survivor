@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4197674635453236}
   - component: {fileID: 212364015963333752}
+  - component: {fileID: 65183287417331356}
   m_Layer: 0
   m_Name: rockyfloor
   m_TagString: Untagged
@@ -40,6 +41,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!65 &65183287417331356
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1511749311398022}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 5.12, y: 5.1200013, z: 0.01}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!212 &212364015963333752
 SpriteRenderer:
   m_ObjectHideFlags: 1

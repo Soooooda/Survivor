@@ -62,7 +62,7 @@ public class StartGame : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        if(m_receiveMessage == "true")
+        if(m_receiveMessage == "120")//退出成功，121退出失败
         {
             SocketDisconnect();
             Application.Quit();
