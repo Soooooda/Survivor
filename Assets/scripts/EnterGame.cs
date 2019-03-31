@@ -16,11 +16,7 @@ public class EnterGame : MonoBehaviour {
 		b.onClick.AddListener(EnterTheGame);
         ClientSocket.instance.onGetReceive = ShowReceiveMessage;
     }
-    void ShowReceiveMessage(string message)
-    {
-        m_receiveMessage = message;
 
-    }
     IEnumerator FadeScene()
     {
         float time = GameObject.Find("Fade").GetComponent<FadeScene>().BeginFade(1);
@@ -32,7 +28,6 @@ public class EnterGame : MonoBehaviour {
     {
         if (ConstantData.hasRole == true)
         {
-            ClientSocket.instance.onGetReceive = ShowReceiveMessage;
             OpenMap();
         }
         else CreateRole();
@@ -48,8 +43,9 @@ public class EnterGame : MonoBehaviour {
         Debug.Log(content);
         if (!string.IsNullOrEmpty(content))
         {
-            ClientSocket.instance.onGetReceive = ShowReceiveMessage;
             ClientSocket.instance.SendMessage(content);
+            Debug.Log(m_receiveMessage);
+
         }
     }
 
@@ -62,9 +58,7 @@ public class EnterGame : MonoBehaviour {
         Debug.Log(content);
         if (!string.IsNullOrEmpty(content))
         {
-            ClientSocket.instance.onGetReceive = ShowReceiveMessage;
             ClientSocket.instance.SendMessage(content);
-            
             Debug.Log(m_receiveMessage);
             
         }
@@ -80,7 +74,6 @@ public class EnterGame : MonoBehaviour {
         Debug.Log(content);
         if (!string.IsNullOrEmpty(content))
         {
-            ClientSocket.instance.onGetReceive = ShowReceiveMessage;
             ClientSocket.instance.SendMessage(content);
             Debug.Log(m_receiveMessage);
 
@@ -92,11 +85,10 @@ public class EnterGame : MonoBehaviour {
         string roomID = ConstantData.roomID;
         string userid = ConstantData.userID;
         string roomName = ConstantData.roomName;
-        string content = "map#get#" + userid + "#" + roomID + "#4#3#1#1#######";
+        string content = "map#get#" + userid + "#" + roomID + "#" + "#4#3#1#1#######";
         Debug.Log(content);
         if (!string.IsNullOrEmpty(content))
         {
-            ClientSocket.instance.onGetReceive = ShowReceiveMessage;
             ClientSocket.instance.SendMessage(content);
             Debug.Log(m_receiveMessage);
 
@@ -105,45 +97,32 @@ public class EnterGame : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        //ClientSocket.instance.onGetReceive = ShowReceiveMessage;
-        //Debug.Log(m_receiveMessage);
-        if (m_receiveMessage.Contains("#412#"))//需要创建地图
+        if (m_receiveMessage == "412")//创建的地图
         {
-            m_receiveMessage = "";//清空消息
             createMap();
-            
+            m_receiveMessage = "";//清空消息
+
         }
-        if(m_receiveMessage.Contains("#410#"))//地图存在
+        else if(m_receiveMessage == "410")//加载地图
         {
+
             m_receiveMessage = "";        
             getMap();
         }
-        if (m_receiveMessage.Contains("#400#"))//创建地图成功
+        else if (m_receiveMessage == "400")//创建地图成功
         {
+
             m_receiveMessage = "";
             getMap();
         }
-        if (m_receiveMessage.Contains("#401#"))//create重复
-        {
-            m_receiveMessage = "";
-            getMap();
-        }
-        if (m_receiveMessage.Contains("#420#"))//获取地图成功
+        else if (m_receiveMessage == "420")//获取地图成功
         {
             Debug.Log(m_receiveMessage);
             m_receiveMessage = "";
             StartCoroutine(FadeScene());
         }
-        if (m_receiveMessage.Contains("#310#"))//创建角色成功
+        else if (m_receiveMessage == "310")//创建角色成功
         {
-            Debug.Log("role begin to create");
-            Debug.Log(m_receiveMessage);
-            m_receiveMessage = "";
-            OpenMap();
-        }
-        if (m_receiveMessage.Contains("#312#"))//角色已经存在
-        {
-            Debug.Log("role exists");
             Debug.Log(m_receiveMessage);
             m_receiveMessage = "";
             OpenMap();
@@ -158,5 +137,9 @@ public class EnterGame : MonoBehaviour {
     }
 
     //展示有没有连上
+    void ShowReceiveMessage(string message)
+    {
+        m_receiveMessage = message;
 
+    }
 }

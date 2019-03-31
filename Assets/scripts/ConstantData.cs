@@ -10,7 +10,7 @@ public class ConstantData : MonoBehaviour {
     public static string roomName = "";
     public static int role = -1;
     public static bool hasRole = false;
-    public static Dictionary<Sprite, int> BagDict = new Dictionary<Sprite, int>();
+
     public static void ResetAllData()
     {
         userID = "";

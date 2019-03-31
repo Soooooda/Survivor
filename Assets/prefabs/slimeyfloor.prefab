@@ -20,7 +20,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4576051526835168}
   - component: {fileID: 212498134641668978}
-  - component: {fileID: 65660705969094342}
   m_Layer: 0
   m_Name: slimeyfloor
   m_TagString: Untagged
@@ -41,18 +40,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!65 &65660705969094342
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1931030448188100}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 5.12, y: 5.1200013, z: 0.01}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!212 &212498134641668978
 SpriteRenderer:
   m_ObjectHideFlags: 1

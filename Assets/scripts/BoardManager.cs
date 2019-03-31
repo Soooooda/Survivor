@@ -113,7 +113,7 @@ public class BoardManager : MonoBehaviour {
         {
             Vector3 randomPosition = RandomPostion();//随机找一个位置放
             GameObject tileChoice = tileArray[Random.Range(0, tileArray.Length)];
-            Instantiate(tileChoice, randomPosition, Quaternion.Euler(45, 0, 0));
+            Instantiate(tileChoice, randomPosition, tileChoice.transform.rotation);
         }
     }
 

@@ -7,11 +7,10 @@ using Tool;
 
 public class ExitPadControl : MonoBehaviour {
 
-    string m_receiveMessage = "wait...";
+
     bool showPadChange = false;
     Button Cancel;
-    Button Return2Menu;
-    Button Return2Room;
+    Button Exit;
     Vector3 padPos;
     public static ExitPadControl instance;
     Image pad;
@@ -31,12 +30,10 @@ public class ExitPadControl : MonoBehaviour {
         Canvas canvas = gameObject.transform.Find("Canvas").GetComponent<Canvas>();
         pad = canvas.transform.Find("exitPad").GetComponent<Image>();
         padPos = pad.transform.position;
-        Cancel = pad.transform.Find("Cancel").GetComponent<Button>();
-        Return2Menu = pad.transform.Find("Return2Menu").GetComponent<Button>();
-        Return2Room = pad.transform.Find("Return2Room").GetComponent<Button>();
+        Cancel = pad.transform.Find("Return").GetComponent<Button>();
+        Exit = pad.transform.Find("Exit").GetComponent<Button>();
         Cancel.onClick.AddListener(returnToGame);
-        Return2Menu.onClick.AddListener(returnToHome);
-        Return2Room.onClick.AddListener(returnToRoom);
+        Exit.onClick.AddListener(returnToHome);
         pad.transform.position = new Vector3(10000f, 0f, 0f);
     }
 
@@ -47,38 +44,19 @@ public class ExitPadControl : MonoBehaviour {
 
     void returnToHome()
     {
-        StartCoroutine(FadeScene("start"));
+        StartCoroutine(FadeScene());
     }
 
-    void returnToRoom()
-    {
-        //room name roomid userid 250退出成功 251退出失败
-        string content = "room#exit#" + ConstantData.roomName + "#" + ConstantData.roomID + "#" + ConstantData.userID + "#####";
-        Debug.Log(content);
-        if (!string.IsNullOrEmpty(content))
-        {
-            ClientSocket.instance.SendMessage(content);
-            Debug.Log(m_receiveMessage);
-        }
-        //发送消息验证房间
-    }
-
-    IEnumerator FadeScene(string scene)
+    IEnumerator FadeScene()
     {
         float time = GameObject.Find("Fade").GetComponent<FadeScene>().BeginFade(1);
         yield return new WaitForSeconds(time);
-        SceneManager.LoadScene(scene);
+        SceneManager.LoadScene("start");
         
     }
 
     // Update is called once per frame
     void Update () {
-
-        //StartCoroutine(FadeScene("Room"));
-        if (m_receiveMessage.Contains("#250#"))
-        {
-            StartCoroutine(FadeScene("Room"));
-        }
 
         if (SceneManager.GetActiveScene().name != "start")
         {

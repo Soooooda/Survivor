@@ -11,14 +11,8 @@ public class RoomControl : MonoBehaviour {
     public string RoomOwner = "";
     GameObject PwdBar;
     Vector3 PwdBarPos;
-    string m_receiveMessage = "wait...";
 
-    void ShowReceiveMessage(string message)
-    {
-        m_receiveMessage = message;
-    }
-
-    void Start () {
+   void Start () {
         //PwdBar = ToggleChoice.transform.Find("PwdEnterBar");//.transform.Find("PwdEnterBar");
         PwdBar = GameObject.Find("PwdEnterBar");
         PwdBarPos = PwdBar.transform.position;
@@ -28,7 +22,6 @@ public class RoomControl : MonoBehaviour {
         RoomName = transform.Find("RoomName").GetComponent<UnityEngine.UI.Text>().text;
         RoomID = transform.Find("RoomID").GetComponent<UnityEngine.UI.Text>().text;
         Debug.Log(RoomName + " start!");
-        ClientSocket.instance.onGetReceive = ShowReceiveMessage;
 
     }
 
@@ -40,27 +33,13 @@ public class RoomControl : MonoBehaviour {
         ConstantData.roomOwner = RoomOwner;
 
         Debug.Log(transform.parent.gameObject.name);
-        if (transform.parent.gameObject.name== "GridMyRooms")//再判断一下房主是不是自己
+        if (transform.parent.gameObject.name== "GridMyRooms")
         {
-            roomEnterWithoutPwd();
+            Debug.Log("进入选择角色啦！");
+            StartCoroutine(FadeScene("ChooseCharacter"));
         }
         else
             PwdBar.transform.position = PwdBarPos;
-    }
-
-    void roomEnterWithoutPwd()
-    {
-        Debug.Log("Enter room without password");
-        string content = "room#enter2#" + ConstantData.roomName + "#" + ConstantData.roomID + "#" + ConstantData.userID + "#####";
-        Debug.Log(content);
-
-        if (!string.IsNullOrEmpty(content))
-        {
-            ClientSocket.instance.SendMessage(content);
-            Debug.Log(m_receiveMessage);
-        }
-        //发送消息验证房间
-
     }
 
     IEnumerator FadeScene(string Scene)
@@ -77,14 +56,7 @@ public class RoomControl : MonoBehaviour {
     //}
 
     //// Update is called once per frame
-    void Update()
-    {
-        if(m_receiveMessage.Contains("#230#"))
-        {
-            Debug.Log("进入选择角色啦！");
-            StartCoroutine(FadeScene("ChooseCharacter"));
-        }
-    }
+    //void Update () {
 
-
+    //   }
 }
