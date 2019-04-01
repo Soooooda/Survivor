@@ -27,6 +27,11 @@ public class BoardManager : MonoBehaviour {
     public int gridCol = 100;
     public int gridRow = 100;
 
+    //用于背包初始化
+    public GameObject ThingsInBag;
+    public GameObject PlayerBag;
+
+
     //在2d游戏里有个wall，wall的数量在5到9之间
     //还有食物的数量
     public Count wallCount = new Count(5, 9);
@@ -48,6 +53,7 @@ public class BoardManager : MonoBehaviour {
     //keep track of positions
     private List<Vector3> gridPositions = new List<Vector3>();
     private List<Vector3> itemPositions = new List<Vector3>();
+
 
     //连接服务器用
     string m_receiveMessage = "wait...";
@@ -96,6 +102,8 @@ public class BoardManager : MonoBehaviour {
 
     }
 
+
+
     //随机选一个的位置放地图，确保都在gridposition中不重复
     Vector3 RandomPostion()
     {
@@ -122,6 +130,7 @@ public class BoardManager : MonoBehaviour {
         ClientSocket.instance.onGetReceive = ShowReceiveMessage;
         BoardSetup();
         InitialiseList();
+        
         LayoutObjectAtRandom(leaves, leafCount.minmum, leafCount.maximum);
         //int enemyCuunt = (int)
     }

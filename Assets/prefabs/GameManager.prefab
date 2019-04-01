@@ -56,6 +56,9 @@ MonoBehaviour:
   rows: 8
   gridCol: 100
   gridRow: 100
+  ThingsInBag: {fileID: 1982509546550654, guid: 8f8deeeb972cb924db0b393106d9196a,
+    type: 2}
+  PlayerBag: {fileID: 1815627993872818, guid: 0f102a31422d4804e8dd9f3d5f372b2f, type: 2}
   wallCount:
     minmum: 5
     maximum: 9

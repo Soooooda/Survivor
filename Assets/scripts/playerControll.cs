@@ -38,14 +38,25 @@ public class playerControll : MonoBehaviour {
     //背包组件
     public GameObject PlayerBag;
     public GameObject ThingsInBag;//还在地上的Thing
-    GameObject[] Things;//放进包里的Thing
-    int[] ThingsNum;//每个栏里有多少个东西
+                                  //GameObject[] Things;//放进包里的Thing
+                                  //int[] ThingsNum;//每个栏里有多少个东西
+
+    void BagSetUp()
+    {
+        //GameObject bag = Instantiate(ThingsInBag, PlayerBag.transform) as GameObject;
+        for (int i = 0; i < 10; i++)
+        {
+            ConstantData.ThingsInPackage[i] = Instantiate(ThingsInBag, PlayerBag.transform) as GameObject;
+            ConstantData.ThingsInPackage[i].GetComponent<ThingInBagControll>().setDisable();
+        }
+    }
 
     //初始化
     void Start()
     {
-        ThingsNum = new int[10];
-        Things = new GameObject[10];
+        BagSetUp();
+        //ThingsNum = new int[10];
+        //Things = new GameObject[10];
         magicBar.fillAmount = 0f;
         bloodBar.fillAmount = 0f;
         rb = GetComponent<Rigidbody>();
@@ -65,15 +76,13 @@ public class playerControll : MonoBehaviour {
         //如果包里一开始有
         count++;
         Debug.Log(count+": "+pickedSprite.name);
-
         for (int i = 0;i<10;i++)
         {
+            ThingInBagControll thingScript = ConstantData.ThingsInPackage[i].GetComponent<ThingInBagControll>();
             //Debug.Log(Things[i]);
-            if(Things[i] != null &&pickedSprite==Things[i].GetComponent<Image>().sprite)
+            if (thingScript.showCount() != 0 &&pickedSprite== thingScript.showSprite())
             {
-                string num = Things[i].transform.Find("num").gameObject.GetComponent<Text>().text;
-                ThingsNum[i]++;
-                Things[i].transform.Find("num").gameObject.GetComponent<Text>().text = ThingsNum[i].ToString();
+                thingScript.addCount();
                 pickedflag = true;
                 Destroy(component);
                 break;
@@ -84,21 +93,16 @@ public class playerControll : MonoBehaviour {
         if(!pickedflag)
         {
             Debug.Log("漏网之🐟");
-            int index = -1;
-            for(int i=0;i<10;i++)
+            ThingInBagControll thingScript;
+            for (int i=0;i<10;i++)
             {
-                if (ThingsNum[i] == 0)
+                thingScript = ConstantData.ThingsInPackage[i].GetComponent<ThingInBagControll>();
+                if (thingScript.showCount()==0)
                 {
-                    index = i;
+                    thingScript.CreateThing(other.gameObject);
+                    Destroy(component);
                     break;
                 }
-            }
-            if (index != -1)
-            {
-                Things[index] = Instantiate(ThingsInBag, PlayerBag.transform) as GameObject;
-                Things[index].GetComponent<Image>().sprite = pickedSprite;
-                ThingsNum[index] = 1;
-                Destroy(component);
             }
             
         }

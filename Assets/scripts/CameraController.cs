@@ -20,15 +20,6 @@ public class CameraController : MonoBehaviour {
     void Update()
     {
 
-
-
-        //If Left Button is clicked
-        //if (Input.GetMouseButtonUp(0))
-        //{
-        //    //create the instance of targetObject and place it at given position.
-        //    Instantiate(targetObject, targetObject.transform.position, Quaternion.Euler(45, 0, 0));
-        //}
-
     }
 
     void LateUpdate()

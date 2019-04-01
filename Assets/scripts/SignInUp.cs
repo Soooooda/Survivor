@@ -42,7 +42,7 @@ public class SignInUp : MonoBehaviour {
     {
         logInFlag = true;
         if(!ClientSocket.instance.isConnected)
-            ClientSocket.instance.ConnectServer("10.136.55.212", 8078);// 10.136.2.134 188.131.178.149
+            ClientSocket.instance.ConnectServer("10.136.88.189", 8078);// 10.136.2.134 188.131.178.149
         //m_connectBtn.onClick.AddListener(SocketConnect);
         //m_sendBtn.onClick.AddListener(SocketSendMessage);
         //m_disconnectBtn.onClick.AddListener(SocketDisconnect);
